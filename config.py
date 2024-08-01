@@ -13,8 +13,8 @@ DB_CONFIG = {
     'database': 'u1585489_tanami'
 }
 
-API_TOKEN = '6697941790:AAGF17sNqO6Ejd7vD58gH-mF6HCBIL4woOk' # Токен получить из @BotFather
-admins = [2004291407] # Список администраторов
+API_TOKEN = '' # Токен получить из @BotFather
+admins = [2004291407] # Список администраторов, добавлять через запятую
 editors = 'editors.json' # Название файла с редакторами
 
 bot = Bot(token=API_TOKEN, parse_mode='HTML')
