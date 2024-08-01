@@ -1,5 +1,5 @@
 # Kwork3500
-(1) Для запуска бота Вам потребуется python версии 3.10 [https://www.python.org/downloads/release/python-31014/] - При установке на windows обязательно нажимаем галочку ADD PYTHON TO PATCH
+(1) Для запуска бота Вам потребуется python версии 3.10 [https://www.python.org/downloads/release/python-31014/] - При установке на windows обязательно нажимаем галочку ADD PYTHON TO PATH
 После установки Python3.10
 
 (2) Открываем windows-консоль -> открываем папку с ботом (cd [путь к папке])
