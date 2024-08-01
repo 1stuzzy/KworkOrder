@@ -1,4 +1,4 @@
-# Kwork Order
+# FAQ TO RUN TELEGRAM BOT
 (1) Для запуска бота Вам потребуется python версии 3.10 [https://www.python.org/downloads/release/python-31014/] - При установке на windows обязательно нажимаем галочку ADD PYTHON TO PATH
 После установки Python3.10
 
