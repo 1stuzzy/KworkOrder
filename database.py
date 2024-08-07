@@ -4,7 +4,11 @@ from config import cursor, db
 
 
 def get_articles(status_filter=None, sort_order='asc'):
-    query = "SELECT article_id, status FROM DP_article_edits WHERE status IN ('STARTED', 'DONE', 'ERROR')"
+    query = """
+    SELECT article_id, status 
+    FROM DP_article_edits 
+    WHERE status IN ('STARTED', 'DONE', 'ERROR')
+    """
     if status_filter:
         query += " AND status = %s"
     query += " ORDER BY article_id " + ("ASC" if sort_order == 'asc' else "DESC")
@@ -50,6 +54,7 @@ def update_article_status(article_id, user_id, status, time_field=None):
         logging.error(f"Ошибка при выполнении запроса: {e}")
 
 
+
 def get_user_article_status_history(user_id, limit, offset):
     query = """
     SELECT article_id, status 
@@ -76,20 +81,22 @@ def count_user_articles(user_id):
         return 0
 
 
-
 def get_url(article_id):
     query = """
     SELECT 
-        DONOR_DOM,
-        PROJ_DOM
-    FROM TAN_DUB_AL
+        PROJ_DOM, 
+        PROJ_PATCH_DUB_AL
+    FROM TAN_DUB_AL 
     WHERE ID_TAB = %s
     """
     try:
         cursor.execute(query, (article_id,))
         result = cursor.fetchone()
         if result:
-            return result
+            proj_dom, proj_patch_dub_al = result
+            external_link = f"{proj_dom}/{proj_patch_dub_al}"
+            internal_link = f"https://dubai.al/vhod/real-estate/projects/edit/{article_id}?ref_lang=ru_RU"
+            return external_link, internal_link
         else:
             logging.error(f"Статья с ID {article_id} не найдена.")
             return None

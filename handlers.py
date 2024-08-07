@@ -237,7 +237,6 @@ async def article_details(message: types.Message):
     user_id = message.from_user.id
     if not (is_editor(user_id) or is_admin(user_id)):
         logger.error(f'Access denied [{user_id}]')
-
         await message.answer('⛔️ <b><i>У вас нет доступа к данному боту! Обратитесь к заказчику!</i></b>')
         return
 
@@ -253,10 +252,11 @@ async def article_details(message: types.Message):
 
     article_id = int(article_id_str)
     article = get_article_by_id(article_id)
-    urls = get_url(article_id)
+    links = get_url(article_id)
 
-    if article and urls:
-        status, donor_dom, proj_dom = article[1], urls[0], urls[1]
+    if article and links:
+        status = article[1]
+        external_link, internal_link = links
         markup = types.InlineKeyboardMarkup(row_width=2)
         buttons = [
             types.InlineKeyboardButton("Начал ✅", callback_data=f"start_{article_id}"),
@@ -264,14 +264,17 @@ async def article_details(message: types.Message):
             types.InlineKeyboardButton("На проверке 🛠", callback_data=f"review_{article_id}")
         ]
         markup.add(*buttons)
-        await message.answer(f"📄 <b>Статья:</b> <code>{article_id}</code>\n"
-                             f"ℹ️ <b>Статус:</b> <code>{status}</code>\n"
-                             f"🔗 <b>Ссылка 1:</b> <b><i>{donor_dom}</i></b>\n"
-                             f"🔗 <b>Ссылка 2:</b> <b><i>{proj_dom}</i></b>",
-                             disable_web_page_preview=True,
-                             reply_markup=markup)
+        await message.answer(
+            f"📄 <b>Статья:</b> <code>{article_id}</code>\n"
+            f"ℹ️ <b>Статус:</b> <code>{status}</code>\n\n"
+            f"🔗 <b>Внешняя ссылка:</b> <a href='{external_link}'>{external_link}</a>\n"
+            f"🔗 <b>Внутренняя ссылка:</b> <i><a href='{internal_link}'>Редактировать</a></i>",
+            reply_markup=markup, disable_web_page_preview=True
+        )
     else:
         await message.answer("<i>❌ Статья с таким номером не найдена.</i>")
+       
+
 
 
 
