@@ -49,6 +49,7 @@ python app.py
 ## Связь с разработчиком
 
 Telegram - [Link](https://t.me/thugsrvmzess)
+
 Kwork - [Link](https://kwork.ru/user/thugscoder)
 
 ---
