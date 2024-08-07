@@ -74,3 +74,25 @@ def count_user_articles(user_id):
     except Exception as e:
         logging.error(f"Ошибка при выполнении запроса: {e}")
         return 0
+
+
+
+def get_url(article_id):
+    query = """
+    SELECT 
+        DONOR_DOM,
+        PROJ_DOM
+    FROM TAN_DUB_AL
+    WHERE ID_TAB = %s
+    """
+    try:
+        cursor.execute(query, (article_id,))
+        result = cursor.fetchone()
+        if result:
+            return result
+        else:
+            logging.error(f"Статья с ID {article_id} не найдена.")
+            return None
+    except Exception as e:
+        logging.error(f"Ошибка при выполнении запроса: {e}")
+        return None

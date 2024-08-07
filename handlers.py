@@ -8,7 +8,7 @@ from config import dp, bot, admins
 from functions import is_editor, is_admin, load_editors
 from states import ArticleStates
 from database import (get_articles, get_article_by_id, update_article_status,
-                      get_user_article_status_history, count_user_articles)
+                      get_user_article_status_history, count_user_articles, get_url)
 
 user_data = {}
 
@@ -253,9 +253,10 @@ async def article_details(message: types.Message):
 
     article_id = int(article_id_str)
     article = get_article_by_id(article_id)
+    urls = get_url(article_id)
 
-    if article:
-        _, status = article
+    if article and urls:
+        status, donor_dom, proj_dom = article[1], urls[0], urls[1]
         markup = types.InlineKeyboardMarkup(row_width=2)
         buttons = [
             types.InlineKeyboardButton("Начал ✅", callback_data=f"start_{article_id}"),
@@ -264,10 +265,14 @@ async def article_details(message: types.Message):
         ]
         markup.add(*buttons)
         await message.answer(f"📄 <b>Статья:</b> <code>{article_id}</code>\n"
-                             f"ℹ️ <b>Статус:</b> <code>{status}</code>",
+                             f"ℹ️ <b>Статус:</b> <code>{status}</code>\n"
+                             f"🔗 <b>Ссылка 1:</b> <b><i>{donor_dom}</i></b>\n"
+                             f"🔗 <b>Ссылка 2:</b> <b><i>{proj_dom}</i></b>",
+                             disable_web_page_preview=True,
                              reply_markup=markup)
     else:
         await message.answer("<i>❌ Статья с таким номером не найдена.</i>")
+
 
 
 @dp.callback_query_handler(lambda c: c.data.startswith(('start_', 'done_', 'review_')))
