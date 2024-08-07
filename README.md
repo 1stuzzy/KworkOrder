@@ -48,8 +48,7 @@ python app.py
 
 ## Связь с разработчиком
 
-Telegram - [Link](https://t.me/thugsrvmzess)
-
-Kwork - [Link](https://kwork.ru/user/thugscoder)
+Telegram - [Мой телеграмм аккаунт](https://t.me/thugrvmzess)
+Kwork - [Мой Kwork](https://kwork.ru/user/thugscoder)
 
 ---
